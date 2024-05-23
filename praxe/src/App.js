@@ -6,7 +6,10 @@ function App() {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [newCar, setNewCar] = useState({ name: '', brand: '', year: '', price: '' });
+  const [newCar, setNewCar] = useState({ name: '', brand: '', type: '', year: '', is_available: true });
+  const [validationError, setValidationError] = useState('');
+
+  const carTypes = ['sedan', 'suv', 'hatchback', 'convertible', 'truck', 'van'];
 
   useEffect(() => {
     axios.get('http://localhost:5001/api/cars')
@@ -23,8 +26,13 @@ function App() {
   }, []);
 
   const handleAddCar = () => {
+    if (!newCar.name || !newCar.brand || !newCar.type || !newCar.year) {
+      setValidationError('All fields are required');
+      return;
+    }
     setCars([...cars, newCar]);
-    setNewCar({ name: '', brand: '', year: '', price: '' });
+    setNewCar({ name: '', brand: '', type: '', year: '', is_available: true });
+    setValidationError('');
   };
 
   return (
@@ -40,10 +48,10 @@ function App() {
             {cars.map((car, index) => (
               <li key={index}>
                 <h2>{car.name}</h2>
-                <p>Brand: {car.model}</p>
-                <p>Type:{car.type}</p>
+                <p>Brand: {car.brand}</p>
+                <p>Type: {car.type}</p>
                 <p>Year: {car.year}</p>
-                <p>Availability: {car.is_available? "yes" : "no"}</p>
+                <p>Availability: {car.is_available ? "yes" : "no"}</p>
               </li>
             ))}
           </ul>
@@ -61,24 +69,31 @@ function App() {
             value={newCar.brand}
             onChange={(e) => setNewCar({ ...newCar, brand: e.target.value })}
           />
-           <input
-            type="text"
-            placeholder="Type"
+          <select
             value={newCar.type}
             onChange={(e) => setNewCar({ ...newCar, type: e.target.value })}
-          />
+          >
+            <option value="">Select Type</option>
+            {carTypes.map((type, index) => (
+              <option key={index} value={type}>{type}</option>
+            ))}
+          </select>
           <input
             type="text"
             placeholder="Year"
             value={newCar.year}
             onChange={(e) => setNewCar({ ...newCar, year: e.target.value })}
           />
-          {/* <p>Is Available?</p>
-          <select>
-          <option value="is_available">Yes</option>
-          <option value="is_available">No</option>
-          </select> */}
+          <label>
+            Is Available?
+            <input
+              type="checkbox"
+              checked={newCar.is_available}
+              onChange={(e) => setNewCar({ ...newCar, is_available: e.target.checked })}
+            />
+          </label>
           <button onClick={handleAddCar}>+</button>
+          {validationError && <p className="error">{validationError}</p>}
         </div>
       </header>
     </div>
