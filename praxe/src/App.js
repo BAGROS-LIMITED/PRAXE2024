@@ -61,6 +61,12 @@ function App() {
             value={newCar.brand}
             onChange={(e) => setNewCar({ ...newCar, brand: e.target.value })}
           />
+           <input
+            type="text"
+            placeholder="Type"
+            value={newCar.type}
+            onChange={(e) => setNewCar({ ...newCar, type: e.target.value })}
+          />
           <input
             type="text"
             placeholder="Year"
@@ -73,6 +79,11 @@ function App() {
             value={newCar.price}
             onChange={(e) => setNewCar({ ...newCar, price: e.target.value })}
           />
+          <p>Is Available?</p>
+          <select>
+          <option value="is_available">Yes</option>
+          <option value="is_available">No</option>
+          </select>
           <button onClick={handleAddCar}>+</button>
         </div>
       </header>
