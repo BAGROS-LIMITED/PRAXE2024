@@ -8,9 +8,9 @@ function App() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:5001/api/cars') // Change this to the new port
+    axios.get('http://localhost:5001/api/cars')
       .then(response => {
-        console.log('API response:', response); // Log the response to check its structure
+        console.log('API response:', response);
         setCars(response.data);
         setLoading(false);
       })
@@ -21,7 +21,6 @@ function App() {
       });
   }, []);
   
-
   return (
     <div className="App">
       <header className="App-header">
@@ -34,7 +33,7 @@ function App() {
           <ul>
             {cars.map((car, index) => (
               <li key={index}>
-                <h2>{car.name}</h2>
+                <h2 className=''>{car.name}</h2>
                 <p>Brand: {car.brand}</p>
                 <p>Year: {car.year}</p>
                 <p>Price: ${car.price}</p>
