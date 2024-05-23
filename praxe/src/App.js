@@ -73,17 +73,11 @@ function App() {
             value={newCar.year}
             onChange={(e) => setNewCar({ ...newCar, year: e.target.value })}
           />
-          <input
-            type="text"
-            placeholder="Price"
-            value={newCar.price}
-            onChange={(e) => setNewCar({ ...newCar, price: e.target.value })}
-          />
-          <p>Is Available?</p>
+          {/* <p>Is Available?</p>
           <select>
           <option value="is_available">Yes</option>
           <option value="is_available">No</option>
-          </select>
+          </select> */}
           <button onClick={handleAddCar}>+</button>
         </div>
       </header>
